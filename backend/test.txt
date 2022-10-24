@@ -1,0 +1,4 @@
+User => Name, Number, Email, Roll Number, role : "admin", student, invagilator
+Room => ID, Room name, Building name
+Allocation => id, roomId, userId
+

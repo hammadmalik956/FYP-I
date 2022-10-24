@@ -14,7 +14,12 @@ const UserSchema = new Schema({
    password:{
     type:String,
     required:true
+   },
+   role:{
+      type: String,
+      required: true
    }
+
   });
   const User =mongoose.model('user',UserSchema);
   User.createIndexes();
