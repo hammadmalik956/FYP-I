@@ -18,8 +18,11 @@ const UserSchema = new Schema({
    role:{
       type: String,
       required: true
-   }
+   },
+   employementstatus:{
+      type:String,
 
+   },
   });
   const User =mongoose.model('user',UserSchema);
   User.createIndexes();
