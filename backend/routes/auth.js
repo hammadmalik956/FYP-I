@@ -4,18 +4,18 @@ const router = express.Router();
 const bcrypt = require("bcryptjs");
 const { body, validationResult } = require("express-validator");
 const jwt = require("jsonwebtoken");
-const fetchuser = require('../milddleware/fetchuser');
+const authverify = require("../milddleware/authverify");
+const isAdmin = require("../milddleware/isAdmin");
 const JWT_SECRET = "Smart$Vision#AI";
-// Route 1: Create A user using : POST "/api/auth/createuser" Doesn't require Authentication
+// Route 1: Create A user using : POST "/api/auth/createuser" Admin Loggedin Required
 router.post(
-  "/createuser",
+  "/createuser", [authverify,isAdmin],
   [
     body("name", "Enter a valid Name: ").isLength({ min: 3 }),
     body("email", "Enter a valid Email").isEmail(),
     body("password", "Password must be atleast 8 characters long").isLength({
       min: 8,
     }),
-    body('role','Enter a Valid Role').isLength({min:5}),
   ],
   async (req, res) => {
     // if there are errors , return Bad request and the errors
@@ -37,16 +37,17 @@ router.post(
         name: req.body.name,
         password: secPass,
         email: req.body.email,
-        role: req.body.role,
-        employementstatus:req.body.employementstatus,
+        employementstatus: req.body.employementstatus,
+        isAdmin:req.body.isAdmin,
       });
       const data = {
         user: {
           id: user.id,
+          
         },
       };
       const authtoken = jwt.sign(data, JWT_SECRET);
-    
+
       res.json({ authtoken });
     } catch (error) {
       console.error(error.message);
@@ -88,6 +89,7 @@ router.post(
       const data = {
         user: {
           id: user.id,
+          isAdmin: user.isAdmin,
         },
       };
       const authtoken = jwt.sign(data, JWT_SECRET);
@@ -99,21 +101,20 @@ router.post(
   }
 );
 
-// Route 3: Get Logined  user details using   : POST "/api/auth/getuser" Login Required
-router.post(
-  "/getuser",fetchuser,async (req, res) => {
-    try {
-      const userId = req.user.id;
-      const user = await User.findById(userId).select("-password");
-      res.send(user);
-    } catch (error) {
-      console.error(error.message);
-      res.status(500).send("Internal Server Error");
-    }
+// Route 3: GET all users data except admin  : POST "/api/auth/getuser" Login Required
+router.post("/getuser", authverify, async (req, res) => {
+  try {
+    //LOGIC TO BE IMPLEMENTED BELOW IS WRONG
+    const userId = req.user.id;
+    const user = await User.findById(userId).select("-password");
+    res.send(user);
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).send("Internal Server Error");
   }
-);
+});
 
 // Route 4: Delete a User    : DELETE "/api/auth/getuser" Login Required
 
-//TODO 
+//TODO
 module.exports = router;
