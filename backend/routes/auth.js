@@ -9,7 +9,8 @@ const isAdmin = require("../milddleware/isAdmin");
 const JWT_SECRET = "Smart$Vision#AI";
 // Route 1: Create A user using : POST "/api/auth/createuser" Admin Loggedin Required
 router.post(
-  "/createuser", [authverify,isAdmin],
+  "/createuser",
+  [authverify, isAdmin],
   [
     body("name", "Enter a valid Name: ").isLength({ min: 3 }),
     body("email", "Enter a valid Email").isEmail(),
@@ -38,12 +39,11 @@ router.post(
         password: secPass,
         email: req.body.email,
         employementstatus: req.body.employementstatus,
-        isAdmin:req.body.isAdmin,
+        isAdmin: req.body.isAdmin,
       });
       const data = {
         user: {
           id: user.id,
-          
         },
       };
       const authtoken = jwt.sign(data, JWT_SECRET);
@@ -101,13 +101,12 @@ router.post(
   }
 );
 
-// Route 3: GET all users data except admin  : POST "/api/auth/getuser" Login Required
-router.post("/getuser", authverify, async (req, res) => {
+// Route 3: GET all users data except admin  : POST "/api/auth/getusers" Login Admin Required
+router.post("/getusers", [authverify, isAdmin], async (req, res) => {
   try {
-    //LOGIC TO BE IMPLEMENTED BELOW IS WRONG
-    const userId = req.user.id;
-    const user = await User.findById(userId).select("-password");
-    res.send(user);
+    const users = await User.find({ isAdmin: { $exists: false } });
+
+    res.send(users);
   } catch (error) {
     console.error(error.message);
     res.status(500).send("Internal Server Error");
