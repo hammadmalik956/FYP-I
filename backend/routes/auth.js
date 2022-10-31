@@ -104,7 +104,7 @@ router.post(
 // Route 3: GET all users data except admin  : POST "/api/auth/getusers" Login Admin Required
 router.post("/getusers", [authverify, isAdmin], async (req, res) => {
   try {
-    const users = await User.find({ isAdmin: { $exists: false } });
+    const users = await User.find({ isAdmin: { $exists: false } }).select("-password");
 
     res.send(users);
   } catch (error) {
