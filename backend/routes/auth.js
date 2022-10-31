@@ -6,7 +6,7 @@ const { body, validationResult } = require("express-validator");
 const jwt = require("jsonwebtoken");
 const authverify = require("../milddleware/authverify");
 const isAdmin = require("../milddleware/isAdmin");
-const JWT_SECRET = "Smart$Vision#AI";
+require('dotenv').config();
 // Route 1: Create A user using : POST "/api/auth/createuser" Admin Loggedin Required
 router.post(
   "/createuser",
@@ -46,7 +46,7 @@ router.post(
           id: user.id,
         },
       };
-      const authtoken = jwt.sign(data, JWT_SECRET);
+      const authtoken = jwt.sign(data, process.env.JWT_SECRET);
 
       res.json({ authtoken });
     } catch (error) {
@@ -92,7 +92,7 @@ router.post(
           isAdmin: user.isAdmin,
         },
       };
-      const authtoken = jwt.sign(data, JWT_SECRET);
+      const authtoken = jwt.sign(data, process.env.JWT_SECRET);
       res.json({ authtoken });
     } catch (error) {
       console.error(error.message);
@@ -105,7 +105,6 @@ router.post(
 router.post("/getusers", [authverify, isAdmin], async (req, res) => {
   try {
     const users = await User.find({ isAdmin: { $exists: false } }).select("-password");
-
     res.send(users);
   } catch (error) {
     console.error(error.message);
