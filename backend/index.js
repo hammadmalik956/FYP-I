@@ -1,19 +1,20 @@
-const connectToMongo = require("./db");
-
+const {connectToMongo} = require("./models");
 const express = require("express");
+//const path = require("path");
+const { PORT, HOSTNAME } = require("./constants")
 
-connectToMongo();
 const app = express();
-const port = 5000;
+const port = PORT||process.env.PORT ||5000;
+const host = process.env.HOST || HOSTNAME;
 
 app.use(express.json());
 //Available Routes
+
 app.use('/api/auth/',require('./routes/auth'))
 app.use('/api/room',require('./routes/room'))
 
 app.listen(port, () => {
-  console.log(`SmartVision app at https://localhost:${port}`);
+  console.log("SERVER RUNNING AT " + host + ":" + port);
+  connectToMongo();
 });
-
-
-// admin login => allocation of invagilator to rooms
+module.exports = { app }

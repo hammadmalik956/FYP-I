@@ -1,7 +1,8 @@
 const jwt = require("jsonwebtoken");
+const config = require("config");
+const JWT_SECRET_KEY = config.get('JWT_SECRET_KEY');
 
-
-const fetchuser = async (req, res, next) => {
+const authorize = async (req, res, next) => {
   //get the user from the jwt token and add id to req object
   const token = req.header("auth-token");
 
@@ -9,7 +10,7 @@ const fetchuser = async (req, res, next) => {
     res.status(401).send({ error: "Please authenticate  using a valid token" });
   }
   try {
-    const data = jwt.verify(token, process.env.JWT_SECRET);
+    const data = jwt.verify(token, JWT_SECRET_KEY);
 
     req.user = data.user;
 
@@ -19,4 +20,4 @@ const fetchuser = async (req, res, next) => {
   }
 };
 
-module.exports = fetchuser;
+module.exports = {authorize};

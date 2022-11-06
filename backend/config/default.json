@@ -1,0 +1,12 @@
+{
+    "NAME": "Node JS API Name",
+    "PORT": 5000,
+    "JWT_SECRET_KEY": "Smart$Vision#AI",
+    "HOSTNAME": "PROD/DEV http://localhost",
+    "DATABASE": {
+        "NAME": "SmartVision",
+        "URL": "mongodb://localhost:27017/",
+        "USERNAME": "username",
+        "PASSWORD": "password"
+    }
+}
