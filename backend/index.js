@@ -10,7 +10,7 @@ const host = process.env.HOST || HOSTNAME;
 app.use(express.json());
 //Available Routes
 
-app.use('/api/auth/',require('./routes/auth'))
+app.use('/api/auth/',require('./routes/user'))
 app.use('/api/room',require('./routes/room'))
 
 app.listen(port, () => {
