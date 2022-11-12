@@ -20,7 +20,7 @@ const docOptions = {
             }
         ],
     },
-    apis: ["./routes/*.js"] //problem here
+    apis: ["./routes/*.js"] 
 }
 
 module.exports = {

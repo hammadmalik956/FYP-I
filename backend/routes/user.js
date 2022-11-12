@@ -1,10 +1,9 @@
 const express = require("express");
 const router = express.Router();
-const {authorize,isAdmin} = require("../middlewares");
+const { authorize, isAdmin } = require("../middlewares");
 const { userController } = require("../controllers");
 require("dotenv").config();
 
-// Route 1: Create A user using : POST "/api/auth/createuser" Admin Loggedin Required
 /**
  * @swagger
  * components:
@@ -12,9 +11,9 @@ require("dotenv").config();
  *          User:
  *              type: object
  *              required:
- *                  -name
- *                  -email
- *                  -password
+ *                  - name
+ *                  - email
+ *                  - password
  *              properties:
  *                  name:
  *                      type: string
@@ -33,8 +32,17 @@ require("dotenv").config();
  *                  email: hammadhameed956@gmail.com
  *                  password: mypassword
  *                  employeementstatus: active
+ * 
+ *      securitySchemes: 
+ *          bearerAuth:
+ *              type: http
+ *              scheme: bearer
+ *              bearerFormat: JWT 
+ *      responses:
+ *          UnauthorizedError:
+ *              description: Acess token is missing or Invalid
+ * 
  */
- 
 
 /**
  * @swagger
@@ -42,7 +50,6 @@ require("dotenv").config();
  *  name: User
  *  description: User Routes
  */
-
 
 /**
  * @swagger
@@ -57,26 +64,65 @@ require("dotenv").config();
  *                      schema:
  *                          $ref: '#/components/schemas/User'
  *                      example:
- *                          name: Malik Hammad 
+ *                          name: Malik Hammad
  *                          email: hammadhameed956@gmail.com
  *                          password: mypassword
  *          responses:
+ *              401: 
+ *                  $ref: '#/components/responses/UnauthorizedError'
+ *              400:
+ *                  description: Validation Error
  *              200:
  *                  description: User Inserted
  *              500:
  *                  description: Server Not Responding
+ *          security:
+ *              - bearerAuth: []
  * */
 
-router.post("/createuser",[authorize, isAdmin],userController.createUser);
+router.post("/createuser", [authorize, isAdmin], userController.createUser);
 
-
-// Route 2: Authenticate a user using  : POST "/api/auth/login" Doesn't require Authentication
-
-router.post("/login",userController.login);
-
-// Route 3: GET all users data except admin  : POST "/api/auth/getusers" Login Admin Required
+/**
+ * @swagger
+ * /api/user/login/:
+ *      post:
+ *          summary: Login User
+ *          tags: [User]
+ *          requestBody:
+ *              required: true
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          $ref: '#/components/schemas/User'
+ *                      example:
+ *                          email: hammadhameed956@gmail.com
+ *                          password: mypassword
+ *          responses:
+ *              400:
+ *                  description: Validation Error
+ *              200:
+ *                  description: User Logged In
+ *              500:
+ *                  description: Server Not Responding
+ * */
+router.post("/login", userController.login);
+/**
+ * @swagger
+ * /api/user/getusers/:
+ *      post:
+ *          summary: Get all Users
+ *          tags: [User]
+ *         
+ *             
+ *          responses:
+ *              200:
+ *                  description: Array of all users
+ *              500:
+ *                  description: Server Not Responding
+ *          security:
+ *              - bearerAuth: []
+ * */
 
 router.post("/getusers", [authorize, isAdmin], userController.getAllUsers);
-
 
 module.exports = router;
