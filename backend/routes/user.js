@@ -116,7 +116,13 @@ router.post("/login", userController.login);
  *             
  *          responses:
  *              200:
- *                  description: Array of all users
+ *                  description: Array of all users except admin
+ *                  content:
+ *                      application/json:
+ *                          schema:
+ *                              type: array
+ *                              items:
+ *                                  $ref: '#/components/schemas/User'
  *              500:
  *                  description: Server Not Responding
  *          security:
