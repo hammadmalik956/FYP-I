@@ -5,12 +5,15 @@ const swaggerJsDoc = require("swagger-jsdoc");
 //const path = require("path");
 const { PORT, HOSTNAME } = require("./constants");
 const { docOptions } = require("./docs");
+const { logger, log_saver } = require("./middlewares");
 
 const app = express();
 const port = PORT||process.env.PORT ||5000;
 const host = process.env.HOST || HOSTNAME;
 
 app.use(express.json());
+app.use(logger());
+app.use(log_saver());
 //Available Routes
 
 
