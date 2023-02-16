@@ -2,6 +2,8 @@ const express = require("express");
 const router = express.Router();
 const { authorize, isAdmin } = require("../middlewares");
 const { userController } = require("../controllers");
+const { errorCatcher } = require("../errors");
+
 require("dotenv").config();
 
 /**
@@ -80,7 +82,7 @@ require("dotenv").config();
  *              - bearerAuth: []
  * */
 
-router.post("/createuser", [authorize, isAdmin], userController.createUser);
+router.post("/createuser",[authorize,isAdmin], errorCatcher(userController.createUser));
 
 /**
  * @swagger
@@ -105,30 +107,18 @@ router.post("/createuser", [authorize, isAdmin], userController.createUser);
  *              500:
  *                  description: Server Not Responding
  * */
-router.post("/login", userController.login);
-/**
- * @swagger
- * /api/user/getusers/:
- *      post:
- *          summary: Get all Users
- *          tags: [User]
- *         
- *             
- *          responses:
- *              200:
- *                  description: Array of all users except admin
- *                  content:
- *                      application/json:
- *                          schema:
- *                              type: array
- *                              items:
- *                                  $ref: '#/components/schemas/User'
- *              500:
- *                  description: Server Not Responding
- *          security:
- *              - bearerAuth: []
- * */
+router.post("/login", errorCatcher(userController.login));
 
-router.post("/getusers", [authorize, isAdmin], userController.getAllUsers);
+
+// Update Password
+router.post("/update-password",[authorize],errorCatcher(userController.updatePassword));
+
+// Forgot Password
+router.post("/forgot-password",errorCatcher(userController.forgotPassword));
+
+//Rest Password
+router.get("/reset-password",errorCatcher(userController.resetPassword));
+
+
 
 module.exports = router;

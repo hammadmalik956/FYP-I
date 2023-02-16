@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const { DATABASE_URL, DATABASE_NAME } = require("../constants");
 const User = require("./user");
+const Room = require("./room");
 
 const connectToMongo = () => {
   mongoose.connect(DATABASE_URL + DATABASE_NAME, { useNewUrlParser: true, useUnifiedTopology: true, }).then(() => {
@@ -11,4 +12,4 @@ const connectToMongo = () => {
   });
 };
 
-module.exports = {connectToMongo, User};
+module.exports = {connectToMongo, User,Room};

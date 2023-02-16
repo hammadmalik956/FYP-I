@@ -24,11 +24,13 @@ const UserSchema = new Schema({
 // validating user for creation
 const validateUser = (user) => {
   const schema = Joi.object().keys({
-      name: Joi.string().required().min(3),
-      email: Joi.string().lowercase().required().email(),
-      password: Joi.string().required().min(6).max(15),
-      employementstatus: Joi.string().max(8),
-      
+    name: Joi.string().required().min(3),
+    email: Joi.string().lowercase().required().email(),
+    password: Joi.string().required().min(6).max(15),
+    employementstatus: Joi.string().max(8),
+   
+    isAdmin:Joi.boolean()
+    
   });
   return schema.validate(user);
 };
