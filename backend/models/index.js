@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const { DATABASE_URL, DATABASE_NAME } = require("../constants");
 const User = require("./user");
 const Room = require("./room");
-
+const Student = require("./student");
 const connectToMongo = () => {
   mongoose.connect(DATABASE_URL + DATABASE_NAME, { useNewUrlParser: true, useUnifiedTopology: true, }).then(() => {
       return console.log(`CONNECTION TO MONGO SUCCESSFUL!`);
@@ -12,4 +12,4 @@ const connectToMongo = () => {
   });
 };
 
-module.exports = {connectToMongo, User,Room};
+module.exports = {connectToMongo, User,Room,Student};

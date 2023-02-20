@@ -22,15 +22,20 @@ const createRoom = async (req, res) => {
             RoomID: req.body.RoomID
         });
         sendResponse(res, "success", 200, "Room Created", room);
-   
+
     } else {
         sendResponse(res, "failure", 400, "Room Already Exist ");
     }
+}
+// get all rooms
+const getRoom = async (req, res) => {
+
+    const allrooms = await Room.find({});
+    sendResponse(res, "success", 200, "Got All Rooms ", allrooms);
 }
 
 
 
 
 
-
-module.exports = { createRoom };
+module.exports = { createRoom, getRoom };
