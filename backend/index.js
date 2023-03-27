@@ -26,6 +26,8 @@ app.use("/api/docs", swaggerUI.serve, swaggerUI.setup(swaggerJsDoc(docOptions)))
 app.use('/api/user/', require('./routes/user'))
 app.use('/api/room', require('./routes/room'))
 app.use('/api/student', require('./routes/student'))
+app.use('/api/exam', require('./routes/exam'))
+
 
 app.listen(port, () => {
   console.log("SERVER RUNNING AT " + host + ":" + port);

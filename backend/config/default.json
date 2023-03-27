@@ -1,6 +1,6 @@
 {
     "NAME": "Node JS API Name",
-    "PORT": 3001,
+    "PORT": 4000,
     "JWT_SECRET_KEY": "Smart$Vision#AI",
     "HOSTNAME": "PROD/DEV http://localhost",
     "DATABASE": {

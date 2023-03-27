@@ -1,25 +1,30 @@
-import logo from './logo.svg';
+import LoginForm from './components/Login';
+import { Routes, Route } from "react-router-dom";
 import './App.css';
-import React from 'react';
+import SideBar from './components/DashBoard/SideBar';
+import NavBar from './components/DashBoard/NavBar';
+import LandPage from './components/LandingPage/LandPage';
+
+
+
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <h1>SmartVision An Artificial Intelligence Based project for Cheating Detection</h1>
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+
+      <Routes>
+      <Route exact path="/" element={<LandPage/>}/>
+        <Route exact path="/login" element={<LoginForm />} />
+       
+        <Route exact path="/dashboard" element={
+          <>
+           
+            <NavBar />
+            <SideBar/>
+            
+            
+          </>} />
+      </Routes>
+    </>
   );
 }
 
