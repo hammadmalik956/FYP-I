@@ -99,7 +99,7 @@ const LoginForm=() => {
 
       <div className="col-lg-6">
 
-        <SideBox animation={bookrec} width="30rem" heading={head} subHeading={subHead} />
+        <SideBox animation={bookrec} width="30rem" heading={head} subHeading={subHead} image='heroLogo.png' />
 
       </div>
 

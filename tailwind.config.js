@@ -5,10 +5,13 @@ module.exports = {
     "./src/**/*.{js,jsx,ts,tsx}",
   ],
   theme: {
-
+    fontSize:{
+      '3xl':'2rem',
+      '4xl':'2.6rem'
+    },
     extend: {
       backgroundImage:{
-        'hero':"url('../public/assets/bg-Lp.png')"
+        'hero':"url('./img/bg-Lp.png')"
       },
       spacing:{
         18: "4.5rem",
@@ -17,6 +20,7 @@ module.exports = {
         blue: {
           600 : '#3209eb',
           50 :'#f6f0ed',
+          20: '#0079c0'
         },
         purple:{
           50: "#353b3c"
@@ -25,6 +29,7 @@ module.exports = {
           50 : "#0f1a20",
           100: "#102121"
         },
+
 
       }
     },
