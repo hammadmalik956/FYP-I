@@ -16,7 +16,7 @@ const createUser = async (req, res) => {
   // check whether the user with same email exist already
 
   let user = await User.findOne({ email: req.body.email });
-  console.log(user);
+  
   if (user) {
     return sendResponse(res, "error", 400, "Sorry the User with this email already exist");
   }
@@ -52,7 +52,7 @@ const login = async (req, res) => {
 
   const { email, password } = req.body;
 
-
+  
   let user = await User.findOne({ email });
 
   if (!user) {

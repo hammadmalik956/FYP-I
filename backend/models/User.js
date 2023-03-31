@@ -19,7 +19,10 @@ const UserSchema = new Schema({
   employementstatus: {
     type: String,
   },
-  isAdmin: Boolean,
+  isAdmin:{
+    type: Boolean,
+    default: false
+  } 
 });
 // validating user for creation
 const validateUser = (user) => {

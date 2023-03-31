@@ -3,27 +3,27 @@ import SideBox from '../Generic/SideBox';
 import InputField from '../Generic/InputField';
 import './../Generic/credForm.css'
 // import { Link } from 'react-router-dom';
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import { useState, useContext, useRef } from 'react';
 import AppContext from '../../context/appState/AppContext';
 import { useUserLoginMutation } from '../../services/nodeApi';
-// import jwt_decode from "jwt-decode";
+ import jwt_decode from "jwt-decode";
 import { useSnackbar } from 'notistack';
 import LoadingButton from '@mui/lab/LoadingButton';
 import { Form } from 'antd';
-//import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import bookrec from '../../assets/bookrec.json';
 
 
 const LoginForm=() => {
-  const [ veteranLogin]=useUserLoginMutation();
+  const [ userLogin]=useUserLoginMutation();
 
-  // const navigate=useNavigate();
+   const navigate=useNavigate();
 
 
-  const head="Login to make a smart record";
+  const head="Login to Monitor Examination";
 
-  const subHead="Kistae provide a new smart way to recording the sales of goods&accessories on installments";
-
+  const subHead="SmartVision Provides a Solution to malicious activities in classroom during examination and also marks attendance of the attendees.";
   const { enqueueSnackbar }=useSnackbar();
 
   const [ creds, setCreds ]=useState( { email: "", password: "" } );
@@ -40,36 +40,33 @@ const LoginForm=() => {
   const handleSubmit=async ( e ) => {
     setLoading( true );
     try{
-    const {data,error}=await veteranLogin( creds )
-
-    
-       console.log(data);
-
-    
-    
+    const {data,error}=await userLogin( creds )
     if ( data ) {
-      console.log(data);
+      console.log(data)
       localStorage.setItem( "user", JSON.stringify( data) );
       setLoading( false );
       
-      Cookies.set( 'jwt', data.result );
-      // const decoded=jwt_decode( res.data.web_token );
+      Cookies.set( 'jwt', data.authtoken );
+       const decoded=jwt_decode( data.authtoken );
 
-      // console.log( decoded );
+       
 
-
+        console.log(decoded.user.isAdmin)
 
       formRef.current.resetFields();
       setCreds( { email: "", password: "" } );
       enqueueSnackbar( "Logged in successfully!", { variant: 'success' } );
-      //setTimeout( () => { navigate( '/dashboard' ) }, 2000 );
+      setTimeout( () => { navigate( '/dashboard' ) }, 1000 );
 
-      localStorage.setItem("userType","admin")
-
+      // if usertype is admin set it to admin otherwise to invigilator user as invg 
+      decoded.user.isAdmin?localStorage.setItem("userType","admin"): localStorage.setItem("userType","invg")
+    
+      
       
     }
   
     else {
+
       setLoading( false );
       console.log(error);
       
@@ -148,10 +145,11 @@ const LoginForm=() => {
                 <LoadingButton
                   size="small"
                   loading={loading}
-                  loadingPosition="end"
+                  loadingPosition='end'
                   variant="contained"
                   className="btn create_account_btn"
                   style={{ width: "70%" }} type="submit"
+                  endIcon={<ArrowForwardIcon/>}
                 >
                   Login
                 </LoadingButton>
