@@ -7,7 +7,7 @@ import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import { useState, useContext, useRef } from 'react';
 import AppContext from '../../context/appState/AppContext';
 import { useUserLoginMutation } from '../../services/nodeApi';
- import jwt_decode from "jwt-decode";
+import jwt_decode from "jwt-decode";
 import { useSnackbar } from 'notistack';
 import LoadingButton from '@mui/lab/LoadingButton';
 import { Form } from 'antd';
@@ -15,71 +15,66 @@ import { useNavigate } from 'react-router-dom';
 import bookrec from '../../assets/bookrec.json';
 
 
-const LoginForm=() => {
-  const [ userLogin]=useUserLoginMutation();
+const LoginForm = () => {
+  const [userLogin] = useUserLoginMutation();
 
-   const navigate=useNavigate();
+  const navigate = useNavigate();
 
 
-  const head="Login to Monitor Examination";
+  const head = "Login to Monitor Examination";
 
-  const subHead="SmartVision Provides a Solution to malicious activities in classroom during examination and also marks attendance of the attendees.";
-  const { enqueueSnackbar }=useSnackbar();
+  const subHead = "SmartVision Provides a Solution to malicious activities in classroom during examination and also marks attendance of the attendees.";
+  const { enqueueSnackbar } = useSnackbar();
 
-  const [ creds, setCreds ]=useState( { email: "", password: "" } );
-  const [ loading, setLoading ]=useState( false );
+  const [creds, setCreds] = useState({ email: "", password: "" });
+  const [loading, setLoading] = useState(false);
 
-  const formRef=useRef( null )
+  const formRef = useRef(null)
 
-  const { onChangeGeneric, Cookies }=useContext( AppContext );
+  const { onChangeGeneric, Cookies } = useContext(AppContext);
 
-  const onChange=onChangeGeneric( creds, setCreds );
+  const onChange = onChangeGeneric(creds, setCreds);
 
 
   //******** SUBMIT LOGIN FORM 
-  const handleSubmit=async ( e ) => {
-    setLoading( true );
-    try{
-    const {data,error}=await userLogin( creds )
-    if ( data ) {
-      console.log(data)
-      localStorage.setItem( "user", JSON.stringify( data) );
-      setLoading( false );
-      
-      Cookies.set( 'jwt', data.authtoken );
-       const decoded=jwt_decode( data.authtoken );
+  const handleSubmit = async (e) => {
+    setLoading(true);
+    try {
+      const { data, error } = await userLogin(creds)
+      if (data) {
+        console.log(data)
+        localStorage.setItem("user", JSON.stringify(data));
+        setLoading(false);
 
-       
-
+        Cookies.set('jwt', data.authtoken);
+        const decoded = jwt_decode(data.authtoken);
         console.log(decoded.user.isAdmin)
 
-      formRef.current.resetFields();
-      setCreds( { email: "", password: "" } );
-      enqueueSnackbar( "Logged in successfully!", { variant: 'success' } );
-      setTimeout( () => { navigate( '/dashboard' ) }, 1000 );
+        formRef.current.resetFields();
+        setCreds({ email: "", password: "" });
+        enqueueSnackbar("Logged in successfully!", { variant: 'success' });
+        setTimeout(() => { navigate('/dashboard') }, 1000);
+        // if usertype is admin set it to admin otherwise to invigilator user as invg 
+        decoded.user.isAdmin ? localStorage.setItem("userType", "admin") : localStorage.setItem("userType", "invg")
 
-      // if usertype is admin set it to admin otherwise to invigilator user as invg 
-      decoded.user.isAdmin?localStorage.setItem("userType","admin"): localStorage.setItem("userType","invg")
-    
-      
-      
+
+      }
+
+      else {
+
+        setLoading(false);
+        console.log(error);
+
+
+        enqueueSnackbar(error.data.message, { variant: 'error' });
+
+      }
+
+
     }
-  
-    else {
+    catch (e) { console.log(e) }
 
-      setLoading( false );
-      console.log(error);
-      
-     
-      enqueueSnackbar(error.data.message, { variant: 'error' } );
-      
-    }
-    
-    
-  }
-    catch(e){ console.log(e)}
 
-    
 
 
   }
@@ -114,7 +109,7 @@ const LoginForm=() => {
 
               <div className="col-md-12">
 
-                <InputField name="email" label="Email Address" onChange={onChange} margin="mx-auto" placeholder="Enter email address" type='email' rules={[ { required: true, message: 'Please enter valid email!', type: 'email' } ]} />
+                <InputField name="email" label="Email Address" onChange={onChange} margin="mx-auto" placeholder="Enter email address" type='email' rules={[{ required: true, message: 'Please enter valid email!', type: 'email' }]} />
 
 
               </div>
@@ -122,7 +117,7 @@ const LoginForm=() => {
 
               <div className="col-md-12">
                 <InputField name="password" label="Password" onChange={onChange} margin="mx-auto" placeholder="Enter password" type='password' required={true}
-                  rules={[ { required: true, message: 'Please enter password!' } ]} />
+                  rules={[{ required: true, message: 'Please enter password!' }]} />
               </div>
 
 
@@ -149,7 +144,7 @@ const LoginForm=() => {
                   variant="contained"
                   className="btn create_account_btn"
                   style={{ width: "70%" }} type="submit"
-                  endIcon={<ArrowForwardIcon/>}
+                  endIcon={<ArrowForwardIcon />}
                 >
                   Login
                 </LoadingButton>

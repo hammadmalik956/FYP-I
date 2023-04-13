@@ -1,5 +1,5 @@
 import LoginForm from './components/Login';
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Outlet } from "react-router-dom";
 
 import './App.css';
 // import SideBar from './components/DashBoard/SideBar';
@@ -7,6 +7,8 @@ import './App.css';
 
 import LandPage from './components/LandingPage/LandPage';
 import SideNavBar from './components/SideNavBar';
+import ViewExam from './components/Dashboard/ViewExam';
+import CreateResource from './components/Dashboard/CreateResource';
 
 
 
@@ -24,15 +26,18 @@ function App() {
            
             <NavBar />
             <SideNavBar/>
+            <div className=" w-full pl-[16rem] pt-[4.25rem] mr-[2rem] bg-gray-50  ">
+              <Outlet />
+            </div>
             
             
           </>} >
            {/****************** ROUTES  *****************/}
-          <Route exact path="createresource" element={ <>helo</>} 
+          <Route exact path="createresource" element={<CreateResource/>} 
           />
           <Route exact path="settings" element={ <>helo</>} 
           />
-          <Route exact path="viewexams" element={ <>helo</>} 
+          <Route exact path="viewexams" element={ <ViewExam/>} 
           />
           </Route>
       </Routes>
