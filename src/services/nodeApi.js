@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-
+import Cookies from 'js-cookie';
 
 export const nodeApi = createApi({
     reducerPath: "nodeApi",
@@ -13,8 +13,20 @@ export const nodeApi = createApi({
                 method: 'POST',
                 body,
             })
-        })
+        }),
+
+        addStudent: builder.mutation( {
+            query: ( body ) => ( {
+              url: '/student/createstudent',
+              method: 'POST',
+              body,
+              headers: {
+                'authorization': `Bearer ${Cookies.get( 'jwt' )}`,
+              }
+            } ),
+            providesTags: [ 'Admin' ],
+          } ),
     })
 })
 
-export const {useUserLoginMutation} = nodeApi;
+export const {useUserLoginMutation,useAddStudentMutation} = nodeApi;

@@ -1,17 +1,52 @@
-import { React, useState } from "react";
-
+import { React ,useState} from "react";
+import { useSnackbar } from 'notistack';
 const TableExp = (props) => {
   // getting table column for props
+  const { enqueueSnackbar } = useSnackbar();
+  const addData = props.mutfun
+  
   const column = props.column;
 
+  console.log(props.mutfun)
   const [data, setData] = useState([]);
-  const [isMinimized, setIsMinimized] = useState(false);
+  const [isMinimized, setIsMinimized] = useState(true);
   const [values, setValues] = useState(Array(column.length).fill(""));
 
-  const handleAdd = () => {
+  const handleAdd =  async() => {
+    try {
+      const { data, error } = await addData ({
+    
+        "Name": "Zain Hafeez",
+        "email":"i190733@nu.edu.pk",
+        "RollNum":"19I-0733",
+        "Section":"C"
+      
+    })
+      if (data) {
+        console.log(data)
+        enqueueSnackbar(data.message, { variant: 'success' });
+       
+
+      }
+
+      else {
+
+       
+        console.log(error);
+
+
+        enqueueSnackbar(error.data.message, { variant: 'error' });
+
+      }
+
+
+    }
+    catch (e) { console.log(e) }
+    
+    
     setData([...data, { ...values }]);
     setValues(Array(column.length).fill(""));
-    console.log(values)
+    
   };
 
   const handleMinimize = () => {

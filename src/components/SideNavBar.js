@@ -32,6 +32,15 @@ const SideNavBar = () => {
                             <h1 className=' mx-2 text-base  group-hover:text-blue-500 font-semibold'>Create Resource</h1>
                         </Link>
                     }
+                    {(userType === "admin") &&
+                        <Link className={`flex mb-2 justify-start items-center  py-2 px-3  hover:bg-white  rounded-md group  hover:shadow-lg ${location.pathname.endsWith("exam") ? " bg-white text-blue-500" : ''}`} to='/dashboard/exam'>
+
+
+                            <AddIcon className='text-2xl  group-hover:text-blue-500' />
+                            <h1 className=' mx-2 text-base  group-hover:text-blue-500 font-semibold'>Exams</h1>
+                        </Link>
+                    }
+
                     {(userType === "invg") &&
                         <Link className={`flex mb-2 justify-start items-center  py-2 px-3  hover:bg-white  rounded-md group  hover:shadow-lg ${location.pathname.endsWith("viewexams") ? " bg-white text-blue-500" : ''}`} to='/dashboard/viewexams'>
 

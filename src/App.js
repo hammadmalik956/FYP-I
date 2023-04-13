@@ -9,6 +9,7 @@ import LandPage from './components/LandingPage/LandPage';
 import SideNavBar from './components/SideNavBar';
 import ViewExam from './components/Dashboard/ViewExam';
 import CreateResource from './components/Dashboard/CreateResource';
+import CreateExam from './components/Dashboard/CreateExam';
 
 
 
@@ -34,6 +35,8 @@ function App() {
           </>} >
            {/****************** ROUTES  *****************/}
           <Route exact path="createresource" element={<CreateResource/>} 
+          />
+          <Route exact path="exam" element={<CreateExam/>} 
           />
           <Route exact path="settings" element={ <>helo</>} 
           />
