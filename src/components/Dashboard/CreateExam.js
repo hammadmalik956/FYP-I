@@ -1,5 +1,5 @@
 import { React, useState } from 'react'
-import TableExp from './TableExp'
+
 import TaskIcon from '@mui/icons-material/Task';
 import { useAddStudentMutation } from '../../services/nodeApi';
 const CreateExam = () => {
@@ -28,8 +28,7 @@ const CreateExam = () => {
                 </div>
 
             </div>
-            <TableExp tname="Exams" headIcon={<TaskIcon />} column={roomColD} mutfun={addStudent} />
-
+           
         </div>
     )
 }

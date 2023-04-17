@@ -119,6 +119,9 @@ router.post("/forgot-password",errorCatcher(userController.forgotPassword));
 //Rest Password
 router.get("/reset-password",errorCatcher(userController.resetPassword));
 
+// Route 2: Get all  Invigilators using 
+router.post("/get-invigilators",[authorize,isAdmin], errorCatcher(userController.getInvigilators));
+
 
 
 module.exports = router;

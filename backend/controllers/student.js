@@ -13,14 +13,14 @@ const createStudent = async (req, res) => {
         return sendResponse(res, "error", 422, validationError(error));
     }
     //finding student if exist
-    const studentdata = await Student.findOne({ RollNum: req.body.RollNum })
+    const studentdata = await Student.findOne({ rollNum: req.body.rollNum })
     if (!studentdata) {
         // creating student
         let student = await Student.create({
-            Name: req.body.Name,
+            name: req.body.name,
             email: req.body.email,
-            RollNum: req.body.RollNum,
-            Section: req.body.Section,
+            rollNum: req.body.rollNum,
+            section: req.body.section,
         });
         sendResponse(res, "success", 200, "Student Created", student);
 

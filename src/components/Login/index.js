@@ -42,13 +42,13 @@ const LoginForm = () => {
     try {
       const { data, error } = await userLogin(creds)
       if (data) {
-        console.log(data)
+        
         localStorage.setItem("user", JSON.stringify(data));
         setLoading(false);
 
         Cookies.set('jwt', data.authtoken);
         const decoded = jwt_decode(data.authtoken);
-        console.log(decoded.user.isAdmin)
+        
 
         formRef.current.resetFields();
         setCreds({ email: "", password: "" });

@@ -5,12 +5,12 @@ import { UserOutlined } from '@ant-design/icons';
 
 
 const NavBar = () => {
-    console.log(JSON.parse(localStorage.getItem("user")))
+    
 
     const user = JSON.parse(localStorage.getItem("user"))
-    console.log(user)
-    const userType = localStorage.getItem("userType");
-    console.log(userType)
+    
+   
+    
 
     return (
         <nav className='  text-white fixed h-[4rem]  w-[calc(100vw_-_14rem)] right-0 font-sans bg-gray-900 z-10 border-b-2 shadow-sm flex justify-end items-center '>

@@ -13,13 +13,13 @@ const createRoom = async (req, res) => {
         return sendResponse(res, "error", 422, validationError(error));
     }
     //finding room if exist
-    const roomdata = await Room.findOne({ RoomID: req.body.RoomID })
+    const roomdata = await Room.findOne({ roomID: req.body.roomID })
     if (!roomdata) {
         // creating sale
         let room = await Room.create({
-            Building: req.body.Building,
-            Floor: req.body.Floor,
-            RoomID: req.body.RoomID
+            building: req.body.building,
+            floor: req.body.floor,
+            roomID: req.body.roomID
         });
         sendResponse(res, "success", 200, "Room Created", room);
 

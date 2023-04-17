@@ -140,7 +140,12 @@ const resetPassword = async(req,res)=>{
 
 
 };
-// get all invigilators user who are not admin
+// get all invigilators user 
+const getInvigilators  = async (req, res) => {
+
+  const allInvg = await User.find({});
+  sendResponse(res, "success", 200, "Got All Invigilators ", allInvg);
+}
 
 
 module.exports = {
@@ -148,6 +153,7 @@ module.exports = {
   login,
   updatePassword,
   forgotPassword,
-  resetPassword
+  resetPassword,
+  getInvigilators
 
 };

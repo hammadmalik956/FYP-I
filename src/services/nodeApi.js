@@ -26,7 +26,61 @@ export const nodeApi = createApi({
             } ),
             providesTags: [ 'Admin' ],
           } ),
+          addRoom: builder.mutation( {
+            query: ( body ) => ( {
+              url: '/room/createroom',
+              method: 'POST',
+              body,
+              headers: {
+                'authorization': `Bearer ${Cookies.get( 'jwt' )}`,
+              }
+            } ),
+            providesTags: [ 'Admin' ],
+          } ),
+          createInvigilator: builder.mutation( {
+            query: ( body ) => ( {
+              url: '/user/createuser',
+              method: 'POST',
+              body,
+              headers: {
+                'authorization': `Bearer ${Cookies.get( 'jwt' )}`,
+              }
+            } ),
+            providesTags: [ 'Admin' ],
+          } ),
+          getAllRooms: builder.query( {
+            query: () => ( {
+              url: '/room/getrooms',
+              method: 'POST',
+              headers: {
+                'authorization': `Bearer ${Cookies.get( 'jwt' )}`,
+              }
+            } ),
+            providesTags: [ 'Admin' ],
+          } ),
+          getAllStudents: builder.query( {
+            query: () => ( {
+              url: '/student/getstudents',
+              method: 'POST',
+              headers: {
+                'authorization': `Bearer ${Cookies.get( 'jwt' )}`,
+              }
+            } ),
+            providesTags: [ 'Admin' ],
+          } ),
+          getAllInvigilators: builder.query( {
+            query: () => ( {
+              url: '/user/get-invigilators',
+              method: 'POST',
+              headers: {
+                'authorization': `Bearer ${Cookies.get( 'jwt' )}`,
+              }
+            } ),
+            providesTags: [ 'Admin' ],
+          } ),
+
+
     })
 })
 
-export const {useUserLoginMutation,useAddStudentMutation} = nodeApi;
+export const {useUserLoginMutation,useAddStudentMutation,useAddRoomMutation, useCreateInvigilatorMutation,useGetAllRoomsQuery,useGetAllStudentsQuery,useGetAllInvigilatorsQuery} = nodeApi;

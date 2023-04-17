@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const {Schema,model} = mongoose;
 const Joi = require("joi");
 const StudentSchema = new Schema({
-   Name:{
+   name:{
     type:String,
     required:true
 
@@ -11,11 +11,11 @@ const StudentSchema = new Schema({
     type:String,
     required:true,
    },
-   RollNum:{
+   rollNum:{
     type:String,
     required:true
    },
-   Section:{
+   section:{
     type:String,
     required:true
    },
@@ -24,10 +24,10 @@ const StudentSchema = new Schema({
   // validating room 
   const validateStudent = (student) => {
    const schema = Joi.object().keys({
-     Name: Joi.string().required(),
+     name: Joi.string().required(),
      email: Joi.string().email().required().lowercase(),
-     RollNum: Joi.string().required(),
-     Section: Joi.string().required(),
+     rollNum: Joi.string().required(),
+     section: Joi.string().required(),
    });
    return schema.validate(student);
  };

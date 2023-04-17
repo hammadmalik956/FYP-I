@@ -2,16 +2,16 @@ const mongoose = require('mongoose');
 const {Schema,model} = mongoose;
 const Joi = require("joi");
 const RoomSchema = new Schema({
-   Building:{
+   building:{
     type:String,
     required:true
 
    },
-   Floor:{
+   floor:{
     type:String,
     required:true
    },
-   RoomID:{
+   roomID:{
     type:String,
     required:true
    },
@@ -20,9 +20,9 @@ const RoomSchema = new Schema({
   // validating room 
   const validateRoom = (room) => {
    const schema = Joi.object().keys({
-     Building: Joi.string().required(),
-     Floor: Joi.string().required(),
-     RoomID: Joi.string().required(),
+     building: Joi.string().required(),
+     floor: Joi.string().required(),
+     roomID: Joi.string().required(),
  
     
     
