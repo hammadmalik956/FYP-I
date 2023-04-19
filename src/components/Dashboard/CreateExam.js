@@ -1,10 +1,24 @@
 import { React, useState } from 'react'
-
 import TaskIcon from '@mui/icons-material/Task';
-import { useAddStudentMutation } from '../../services/nodeApi';
+import { useSelector } from 'react-redux';
+
 const CreateExam = () => {
-    const [addStudent] = useAddStudentMutation();
-    const [isMinimized, setIsMinimized] = useState(true);
+
+
+    const InvgilatorData = useSelector(
+        (state) => state.invg
+    );
+    const RoomData = useSelector(
+        (state) => state.room
+    );
+    const StudentData = useSelector(
+        (state) => state.student
+    );
+    console.log(InvgilatorData.InvgData.result);
+    console.log(StudentData.StudData.result);
+    console.log(RoomData.RoomData.result);
+
+    const [isMinimized, setIsMinimized] = useState(false);
     const handleMinimize = () => {
         setIsMinimized(!isMinimized);
     };
@@ -28,9 +42,10 @@ const CreateExam = () => {
                 </div>
 
             </div>
-           
+
         </div>
     )
 }
+
 
 export default CreateExam

@@ -1,14 +1,17 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { setupListeners } from '@reduxjs/toolkit/query'
 import { nodeApi } from "../services/nodeApi";
-//import userReducer from "./employee";
 
-
+import invigilatorsSlice from './invgSlice';
+import StudentSlice from './StudentSlice';
+import RoomSlice from './roomSlice';
 export const store=configureStore( {
         reducer: {
                 // Add the generated reducer as a specific top-level slice
                 [ nodeApi.reducerPath ]: nodeApi.reducer,
-              //  User: userReducer
+                invg: invigilatorsSlice,
+                student: StudentSlice,
+                room: RoomSlice,
 
         },
 

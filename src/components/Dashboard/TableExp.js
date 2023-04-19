@@ -1,18 +1,21 @@
 import { React, useState, useEffect } from "react";
 import { useSnackbar } from 'notistack';
+import { useDispatch } from 'react-redux';
+
 
 const TableExp = (props) => {
+
 
 
   // getting table column for props
   const { enqueueSnackbar } = useSnackbar();
   const addData = props.mutfun;
-  
-
+  const slicefun = props.slice;
+  const dispatch= useDispatch();
 
   const column = props.column;
   const [rdata, setRData] = useState([]);
-  const [isMinimized, setIsMinimized] = useState(true);
+  const [isMinimized, setIsMinimized] = useState(false);
   const [values, setValues] = useState(Array(column.length).fill(""));
   // get data from database 
   
@@ -21,15 +24,19 @@ const TableExp = (props) => {
     // get data from database 
     const {data:qData, isLoading:isLoadingRoom} = props.qurfun;
     if (isLoadingRoom === false) {
+      dispatch(slicefun(qData))
       const newData = qData.result.map((row) => {
         const { _id, __v, ...rest } = row;
         return rest;
+
       });
       
       setRData(newData)
       //setRData(qData);
     }
   }, [props.qurfun]);
+
+
 
   const handleAdd = async () => {
 
@@ -69,6 +76,7 @@ const TableExp = (props) => {
     setValues(newValues);
     
   };
+  
 
   return (
     <div className=" m-4 border-blue-500 border-1 bg-white ">
