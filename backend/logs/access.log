@@ -1292,3 +1292,11 @@ OPTIONS 200 ( /api/user/get-invigilators ) ( 2023-04-19T22:14:46.227Z ) 0.246 ms
 POST 200 ( /api/student/getstudents ) ( 2023-04-19T22:14:46.235Z ) 4.894 ms
 POST 200 ( /api/room/getrooms ) ( 2023-04-19T22:14:46.241Z ) 5.156 ms
 POST 200 ( /api/user/get-invigilators ) ( 2023-04-19T22:14:46.249Z ) 17.301 ms
+OPTIONS 200 ( /api/user/login ) ( 2023-04-21T11:07:57.808Z ) 2.941 ms
+POST 200 ( /api/user/login ) ( 2023-04-21T11:07:57.997Z ) 174.075 ms
+OPTIONS 200 ( /api/room/getrooms ) ( 2023-04-21T11:08:04.029Z ) 0.522 ms
+OPTIONS 200 ( /api/student/getstudents ) ( 2023-04-21T11:08:04.031Z ) 0.432 ms
+OPTIONS 200 ( /api/user/get-invigilators ) ( 2023-04-21T11:08:04.033Z ) 0.605 ms
+POST 200 ( /api/student/getstudents ) ( 2023-04-21T11:08:04.082Z ) 48.274 ms
+POST 200 ( /api/user/get-invigilators ) ( 2023-04-21T11:08:04.090Z ) 52.969 ms
+POST 200 ( /api/room/getrooms ) ( 2023-04-21T11:08:04.092Z ) 49.539 ms
