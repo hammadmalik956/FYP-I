@@ -3,26 +3,15 @@ import TaskIcon from '@mui/icons-material/Task';
 import { useSelector } from 'react-redux';
 import { Divider } from '@mui/material';
 import { Form, Input, DatePicker, Select } from 'antd';
+import Selector from './Utils/Selector';
 const { Option } = Select;
 
-const courseInstructors = [
-    { id: 1, name: 'John Doe' },
-    { id: 2, name: 'Jane Smith' },
-    { id: 3, name: 'Bob Johnson' },
-];
 
-const rooms = [
-    { id: 1, name: 'Room 1' },
-    { id: 2, name: 'Room 2' },
-    { id: 3, name: 'Room 3' },
-];
+
+
 
 const CreateExam = () => {
-    const onFinish = (values) => {
-        console.log(values);
-    };
-
-
+    //geting data 
     const InvgilatorData = useSelector(
         (state) => state.invg
     );
@@ -32,9 +21,35 @@ const CreateExam = () => {
     const StudentData = useSelector(
         (state) => state.student
     );
-    console.log(InvgilatorData.InvgData.result);
-    console.log(StudentData.StudData.result);
-    console.log(RoomData.RoomData.result);
+
+    //console.log(InvgilatorData.InvgData.result);
+
+    // console.log(StudentData.StudData.result);
+
+    const rooms = RoomData?.RoomData?.result;
+    const invgilators = InvgilatorData?.InvgData?.result;
+    const rollNumbers = StudentData?.StudData?.result;
+       
+    const [selectedRollNumbers, setSelectedRollNumbers] = useState([]);
+
+    const onSelect = rollNumber => {
+        if (selectedRollNumbers.includes(rollNumber)) {
+            setSelectedRollNumbers(selectedRollNumbers.filter(num => num !== rollNumber));
+        } else {
+            setSelectedRollNumbers([...selectedRollNumbers, rollNumber]);
+        }
+        
+    };
+    
+   
+    //end of selector 
+    const onFinish = (values) => {
+        values.studentAlloted = selectedRollNumbers;
+        console.log(values);
+    };
+
+
+   
 
     const [isMinimized, setIsMinimized] = useState(false);
     const handleMinimize = () => {
@@ -71,67 +86,76 @@ const CreateExam = () => {
                         </div>
                         <Divider />
                         {/* main Section form */}
-                        <div className='my-4    p-4 z-10  shadow-gray-900 shadow'>
-                        <Form onFinish={onFinish}>
-                            <div className='flex flex-wrap justify-between  '>
-                            <Form.Item name="examName" label="Name of Exam" rules={[{ required: true }]}>
-                                <Input />
-                            </Form.Item>
-                            <Form.Item name="examCode" label="Course Code of Exam" rules={[{ required: true }]}>
-                                <Input />
-                            </Form.Item>
-                           
-                            <Form.Item name="serialNo" label="Serial No" rules={[{ required: true }]}>
-                                <Input />
-                            </Form.Item>
-                            </div>
-                            <div className='flex  justify-between  '>
-                            <Form.Item name="examType" label="Type of Exam" rules={[{ required: true }]}>
-                                <Select >
-                                    <Option value="sessionalI">Sessional I </Option>
-                                    <Option value="sessionalII">Sessional II </Option>
-                                    <Option value="final">Final </Option>
-                                </Select>
-                            </Form.Item>
-                            <Form.Item name="duration" label="Duration of Exam" rules={[{ required: true }]}>
-                                <Input />
-                            </Form.Item>
-                            <Form.Item name="date" label="Date" rules={[{ required: true }]}>
-                                <DatePicker />
-                            </Form.Item>
-                            </div>
-                            <Form.Item name="instructor" label="Course Instructor" rules={[{ required: true }]}>
-                                <Select>
-                                    {courseInstructors.map((instructor) => (
-                                        <Option key={instructor.id} value={instructor.name}>
-                                            {instructor.name}
-                                        </Option>
-                                    ))}
-                                </Select>
-                            </Form.Item>
-                            <Form.Item name="studentRange" label="Students Allotted" rules={[{ required: true }]}>
-                                <Input />
-                            </Form.Item>
-                            <Form.Item name="room" label="Room" rules={[{ required: true }]}>
-                                <Select>
-                                    {rooms.map((room) => (
-                                        <Option key={room.id} value={room.name}>
-                                            {room.name}
-                                        </Option>
-                                    ))}
-                                </Select>
-                            </Form.Item>
-                            <Form.Item name="startTime" label="Start Time" rules={[{ required: true }]}>
-                                <DatePicker showTime />
-                            </Form.Item>
-                            <Form.Item name="endTime" label="End Time" rules={[{ required: true }]}>
-                                <DatePicker showTime />
-                            </Form.Item>
-                            
-                            <Form.Item>
-                                <button type="submit">Submit</button>
-                            </Form.Item>
-                        </Form>
+                        <div className='my-4    p-4  shadow-gray-900 shadow-sm  font-semibold'>
+                            <Form onFinish={onFinish} >
+                                <div className='flex flex-wrap justify-between   '>
+                                    <Form.Item name="examName" label="Name of Exam" rules={[{ required: true }]}>
+                                        <Input />
+                                    </Form.Item>
+                                    <Form.Item name="examCode" label="Course Code of Exam" rules={[{ required: true }]}>
+                                        <Input />
+                                    </Form.Item>
+
+                                    <Form.Item name="serialNo" label="Serial No" rules={[{ required: true }]}>
+                                        <Input />
+                                    </Form.Item>
+                                </div>
+                                <div className=' flex  justify-between  '>
+                                    <Form.Item name="examType" label="Type of Exam" rules={[{ required: true }] } className='w-64' >
+                                         <Select >
+                                            <Option value="sessionalI">Sessional I </Option>
+                                            <Option value="sessionalII">Sessional II </Option>
+                                            <Option value="final">Final </Option>
+                                        </Select>
+                                    </Form.Item>
+                                    <Form.Item name="duration" label="Duration of Exam" rules={[{ required: true }]}>
+                                        <Input />
+                                    </Form.Item>
+                                    <Form.Item name="date" label="Date" rules={[{ required: true }]}>
+                                        <DatePicker />
+                                    </Form.Item>
+                                </div>
+                                <div className='flex  justify-between'>
+                                <Form.Item name="invigilator" label="Course Invigilator" rules={[{ required: true }]} className='w-80'>
+                                    <Select>
+                                        {invgilators.map((instructor) => (
+                                            <Option key={instructor._id} value={instructor._id}>
+                                                {instructor.name}
+                                            </Option>
+                                        ))}
+                                    </Select>
+                                </Form.Item>
+                               
+                                <Form.Item name="studentAlloted" label="Students" >
+                                    <Selector rollNumbers={rollNumbers}
+                                        selectedRollNumbers={selectedRollNumbers}
+                                        onSelect={onSelect} />
+                                </Form.Item>
+                                
+                                </div>
+                                <Form.Item name="room" label="Room" rules={[{ required: true }]}>
+                                    <Select>
+                                        {rooms.map((room) => (
+                                            <Option key={room._id} value={room._id}>
+                                                {room.roomID}
+                                            </Option>
+                                        ))}
+                                    </Select>
+                                </Form.Item>
+                                <div className='flex justify-between' >
+                                <Form.Item name="startTime" label="Start Time" rules={[{ required: true }]}>
+                                    <DatePicker showTime />
+                                </Form.Item>
+                                <Form.Item name="endTime" label="End Time" rules={[{ required: true }]}>
+                                    <DatePicker showTime />
+                                </Form.Item>
+                                </div>  
+                                <div className='flex justify-end'>    
+                                <Form.Item>
+                                    <button  className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" type="submit">Submit</button>
+                                </Form.Item>
+                                </div>    
+                            </Form>
                         </div>
                     </div>
                 </div>)}
