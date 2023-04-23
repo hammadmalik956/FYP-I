@@ -78,9 +78,20 @@ export const nodeApi = createApi({
             } ),
             providesTags: [ 'Admin' ],
           } ),
+          createExam: builder.mutation( {
+            query: ( body ) => ( {
+              url: '/exam/createexam',
+              method: 'POST',
+              body,
+              headers: {
+                'authorization': `Bearer ${Cookies.get( 'jwt' )}`,
+              }
+            } ),
+            providesTags: [ 'Admin' ],
+          } ),
 
 
     })
 })
 
-export const {useUserLoginMutation,useAddStudentMutation,useAddRoomMutation, useCreateInvigilatorMutation,useGetAllRoomsQuery,useGetAllStudentsQuery,useGetAllInvigilatorsQuery} = nodeApi;
+export const {useUserLoginMutation,useAddStudentMutation,useAddRoomMutation, useCreateInvigilatorMutation,useGetAllRoomsQuery,useGetAllStudentsQuery,useGetAllInvigilatorsQuery ,useCreateExamMutation} = nodeApi;

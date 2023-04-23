@@ -19,7 +19,12 @@ const createExam = async (req, res) => {
         let exam = await Exam.create({
             examCode: req.body.examCode,
             examName: req.body.examName,
+            serialNo: req.body.serialNo,
+            examType: req.body.examType,
+            examDuration: req.body.examDuration,
+            allotedInvigilator: req.body.allotedInvigilator,
             room: req.body.room,
+            examDate: req.body.examDate,
             allotedStudents: req.body.allotedStudents,
             presentStudents: req.body.presentStudents,
             startTime: req.body.startTime,
