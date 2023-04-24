@@ -6,6 +6,7 @@ import { Form, Input, DatePicker, Select } from 'antd';
 import Selector from './Utils/Selector';
 import { useSnackbar } from 'notistack';
 import { useCreateExamMutation } from '../../services/nodeApi';
+import ExamTable from './ExamTable';
 const { Option } = Select;
 
 
@@ -76,7 +77,7 @@ const CreateExam = () => {
 
 
     const [isMinimizedE, setIsMinimizedE] = useState(false);
-    const [isMinimizedV, setIsMinimizedV] = useState(false);
+    const [isMinimizedV, setIsMinimizedV] = useState(true);
     const handleMinimize = () => {
         setIsMinimizedE(!isMinimizedE);
         setIsMinimizedV(isMinimizedE);
@@ -200,9 +201,7 @@ const CreateExam = () => {
                     <div className="text-white">{isMinimizedV ? "+" : "-"}</div>
                 </div>
                 {!isMinimizedV && (
-                    <h1>
-                        hello
-                    </h1>
+                    <ExamTable />
                 )}
             </div>
         </div>

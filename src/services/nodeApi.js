@@ -89,9 +89,19 @@ export const nodeApi = createApi({
             } ),
             providesTags: [ 'Admin' ],
           } ),
+          getAllExams: builder.query( {
+            query: () => ( {
+              url: '/exam/getexams',
+              method: 'POST',
+              headers: {
+                'authorization': `Bearer ${Cookies.get( 'jwt' )}`,
+              }
+            } ),
+            providesTags: [ 'Admin' ],
+          } ),
 
 
     })
 })
 
-export const {useUserLoginMutation,useAddStudentMutation,useAddRoomMutation, useCreateInvigilatorMutation,useGetAllRoomsQuery,useGetAllStudentsQuery,useGetAllInvigilatorsQuery ,useCreateExamMutation} = nodeApi;
+export const {useUserLoginMutation,useAddStudentMutation,useAddRoomMutation, useCreateInvigilatorMutation,useGetAllRoomsQuery,useGetAllStudentsQuery,useGetAllInvigilatorsQuery ,useCreateExamMutation,useGetAllExamsQuery} = nodeApi;

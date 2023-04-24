@@ -40,7 +40,9 @@ function App() {
           />
           <Route exact path="settings" element={ <>helo</>} 
           />
-          <Route exact path="viewexams" element={ <ViewExam/>} 
+          {/* <Route exact path="viewexams" element={ <ViewExam/>} 
+          /> */}
+           <Route exact path="vexam/:id"  element={ <ViewExam/>} 
           />
           </Route>
       </Routes>
