@@ -99,9 +99,31 @@ export const nodeApi = createApi({
             } ),
             providesTags: [ 'Admin' ],
           } ),
+          getExamByID: builder.query({
+            query: (id) => ({
+              url: '/exam/getexambyid',
+              method: 'POST',
+              body: { id }, // add a body property with the exam ID
+              headers: {
+                'authorization': `Bearer ${Cookies.get('jwt')}`,
+              },
+            }),
+            providesTags: ['Admin'],
+          }),
+          getInvgByID: builder.query({
+            query: (id) => ({
+              url: '/user/getinvgbyid',
+              method: 'POST',
+              body: { id }, // add a body property with the exam ID
+              headers: {
+                'authorization': `Bearer ${Cookies.get('jwt')}`,
+              },
+            }),
+            providesTags: ['Admin'],
+          }),
 
 
     })
 })
 
-export const {useUserLoginMutation,useAddStudentMutation,useAddRoomMutation, useCreateInvigilatorMutation,useGetAllRoomsQuery,useGetAllStudentsQuery,useGetAllInvigilatorsQuery ,useCreateExamMutation,useGetAllExamsQuery} = nodeApi;
+export const {useUserLoginMutation,useAddStudentMutation,useAddRoomMutation, useCreateInvigilatorMutation,useGetAllRoomsQuery,useGetAllStudentsQuery,useGetAllInvigilatorsQuery ,useCreateExamMutation,useGetAllExamsQuery,useGetExamByIDQuery,useGetInvgByIDQuery} = nodeApi;

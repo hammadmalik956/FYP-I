@@ -146,6 +146,13 @@ const getInvigilators  = async (req, res) => {
   const allInvg = await User.find({});
   sendResponse(res, "success", 200, "Got All Invigilators ", allInvg);
 }
+const getInvigilatorByID  = async (req, res) => {
+  const user = await User.findById(req.body.id);
+  if (!user) {
+      return sendResponse(res, "failure", 404, "Exam not found");
+  }
+  sendResponse(res, "success", 200, "Got Exam ", user);
+ }
 
 
 module.exports = {
@@ -154,6 +161,7 @@ module.exports = {
   updatePassword,
   forgotPassword,
   resetPassword,
-  getInvigilators
+  getInvigilators,
+  getInvigilatorByID
 
 };

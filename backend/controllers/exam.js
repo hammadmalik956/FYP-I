@@ -43,9 +43,17 @@ const getExams = async (req, res) => {
     const allexams = await Exam.find({});
     sendResponse(res, "success", 200, "Got All Exams ", allexams);
 }
+const getExamByID = async (req, res) => {
+
+    const exam = await Exam.findById(req.body.id);
+    if (!exam) {
+        return sendResponse(res, "failure", 404, "Exam not found");
+    }
+    sendResponse(res, "success", 200, "Got Exam ", exam);
+}
 
 
 
 
 
-module.exports = { createExam, getExams };
+module.exports = { createExam, getExams,getExamByID };
