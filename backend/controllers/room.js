@@ -33,9 +33,17 @@ const getRoom = async (req, res) => {
     const allrooms = await Room.find({});
     sendResponse(res, "success", 200, "Got All Rooms ", allrooms);
 }
+const getRoomByID = async (req, res) => {
+    const room = await Room.findById(req.body.id);
+    if (!room) {
+        return sendResponse(res, "failure", 404, "Room Not Found");
+    }
+    sendResponse(res, "success", 200, "Got Room", room);
+   
+}
 
 
 
 
 
-module.exports = { createRoom, getRoom };
+module.exports = { createRoom, getRoom,getRoomByID };

@@ -13,6 +13,11 @@ router.post("/createexam",[authorize,isAdmin], errorCatcher(examController.creat
 router.post("/getexams",[authorize,isAdmin], errorCatcher(examController.getExams));
 // Route 2: Get specific  rooms using exam id
 router.post("/getexambyid",[authorize,isAdmin], errorCatcher(examController.getExamByID));
+// Route 2: Add  present student  exam id and student id
+router.post("/addpresentstudent",[authorize,isAdmin], errorCatcher(examController.addPresentStudenttoExam));
+// Route 2: Add  cheating student  exam id and student id
+router.post("/addcheatingstudent",[authorize,isAdmin], errorCatcher(examController.addCheatingStudenttoExam));
+
 
 
 

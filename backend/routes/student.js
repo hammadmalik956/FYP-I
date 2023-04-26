@@ -11,6 +11,8 @@ const { errorCatcher } = require("../errors");
 router.post("/createstudent",[authorize,isAdmin], errorCatcher(studentController.createStudent));
 // Route 2: Get all  rooms using 
 router.post("/getstudents",[authorize,isAdmin], errorCatcher(studentController.getStudents));
+// Route 2: Get   rooms using id
+router.post("/getstudentbyids",[authorize,isAdmin], errorCatcher(studentController.getStudentsByIDs));
 
 
 

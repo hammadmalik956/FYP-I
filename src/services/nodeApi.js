@@ -121,9 +121,31 @@ export const nodeApi = createApi({
             }),
             providesTags: ['Admin'],
           }),
+          getRoomByID: builder.query({
+            query: (id) => ({
+              url: '/room/getroombyid',
+              method: 'POST',
+              body: { id }, // add a body property with the exam ID
+              headers: {
+                'authorization': `Bearer ${Cookies.get('jwt')}`,
+              },
+            }),
+            providesTags: ['Admin'],
+          }),
+          getStudentByID: builder.query({
+            query: (id) => ({
+              url: '/student/getstudentbyids',
+              method: 'POST',
+              body: { id }, // add a body property with the student ID
+              headers: {
+                'authorization': `Bearer ${Cookies.get('jwt')}`,
+              },
+            }),
+            providesTags: ['Admin'],
+          }),
 
 
     })
 })
 
-export const {useUserLoginMutation,useAddStudentMutation,useAddRoomMutation, useCreateInvigilatorMutation,useGetAllRoomsQuery,useGetAllStudentsQuery,useGetAllInvigilatorsQuery ,useCreateExamMutation,useGetAllExamsQuery,useGetExamByIDQuery,useGetInvgByIDQuery} = nodeApi;
+export const {useUserLoginMutation,useAddStudentMutation,useAddRoomMutation, useCreateInvigilatorMutation,useGetAllRoomsQuery,useGetAllStudentsQuery,useGetAllInvigilatorsQuery ,useCreateExamMutation,useGetAllExamsQuery,useGetExamByIDQuery,useGetInvgByIDQuery,useGetRoomByIDQuery,useGetStudentByIDQuery} = nodeApi;

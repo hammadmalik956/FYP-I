@@ -11,6 +11,8 @@ const { errorCatcher } = require("../errors");
 router.post("/createroom",[authorize,isAdmin], errorCatcher(roomController.createRoom));
 // Route 2: Get all  rooms using 
 router.post("/getrooms",[authorize,isAdmin], errorCatcher(roomController.getRoom));
+// Route 2: Get   rooms using  id
+router.post("/getroombyid",[authorize,isAdmin], errorCatcher(roomController.getRoomByID));
 
 
 

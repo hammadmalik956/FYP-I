@@ -34,9 +34,18 @@ const getStudents = async (req, res) => {
     const allstudents = await Student.find({});
     sendResponse(res, "success", 200, "Got All Students ", allstudents);
 }
+const getStudentsByIDs = async (req, res) => {
+    const { id } = req.body;
+    
+    const students = await Student.find({ _id: { $in: id } });
+  
+    if (!students.length) {
+      return sendResponse(res, "failure", 400, "No students found with given IDs");
+    }
+  
+    sendResponse(res, "success", 200, "Got Students", students);
+  }
 
 
 
-
-
-module.exports = { createStudent, getStudents };
+module.exports = { createStudent, getStudents,getStudentsByIDs };

@@ -27,6 +27,7 @@ const createExam = async (req, res) => {
             examDate: req.body.examDate,
             allotedStudents: req.body.allotedStudents,
             presentStudents: req.body.presentStudents,
+            cheatingStudents: req.body.cheatingStudents,
             startTime: req.body.startTime,
             endTime: req.body.endTime,
             comStatus: req.body.comStatus
@@ -52,8 +53,48 @@ const getExamByID = async (req, res) => {
     sendResponse(res, "success", 200, "Got Exam ", exam);
 }
 
+const addPresentStudenttoExam = async (req, res) => {
+    const { id: examId, studentId } = req.body;
+  
+    try {
+      const updatedExam = await Exam.findByIdAndUpdate(
+        examId,
+        { $addToSet: { presentStudents: studentId } },
+        { new: true }
+      );
+  
+      if (!updatedExam) {
+        return sendResponse(res, "failure", 404, "Exam not found");
+      }
+  
+      sendResponse(res, "success", 200, "Student added to exam", updatedExam);
+    } catch (error) {
+      console.error(error);
+      sendResponse(res, "failure", 500, "Internal server error");
+    }
+  };
+  const addCheatingStudenttoExam = async (req, res) => {
+    const { id: examId, studentId } = req.body;
+  
+    try {
+      const updatedExam = await Exam.findByIdAndUpdate(
+        examId,
+        { $addToSet: { cheatingStudents: studentId } },
+        { new: true }
+      );
+  
+      if (!updatedExam) {
+        return sendResponse(res, "failure", 404, "Exam not found");
+      }
+  
+      sendResponse(res, "success", 200, "Student added to exam", updatedExam);
+    } catch (error) {
+      console.error(error);
+      sendResponse(res, "failure", 500, "Internal server error");
+    }
+  };
 
 
 
 
-module.exports = { createExam, getExams,getExamByID };
+module.exports = { createExam, getExams,getExamByID,addPresentStudenttoExam ,addCheatingStudenttoExam };

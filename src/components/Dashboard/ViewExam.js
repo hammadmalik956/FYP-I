@@ -1,28 +1,52 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import TaskIcon from '@mui/icons-material/Task';
 import { Divider } from '@mui/material';
-import { useGetExamByIDQuery } from '../../services/nodeApi';
-import {formatTime,formatDate} from './Utils/formatDnT';
+import { useGetExamByIDQuery, useGetInvgByIDQuery ,useGetRoomByIDQuery ,useGetStudentByIDQuery } from '../../services/nodeApi';
+import { formatDate,formatTime } from './Utils/formatDnT';
+import { setSExamData } from '../../redux/singExamD';
+import { useDispatch } from 'react-redux';
+import Tabl from './Utils/Tabl';
 
 
 const ViewExam = () => {
+  const dispatch = useDispatch();
+
   const [isMinimized, setIsMinimized] = useState(false);
   const [examData, setExamData] = useState({});
 
+  const { id } = useParams(); // get the id from the url id of particular exam
+  const { data, isLoading } = useGetExamByIDQuery(id); // get the exam data from the backend
+
+  useEffect(() => {
+    async function fetchData() {
+
+      if (!isLoading && data) {
+        setExamData(data.result);
+        dispatch(setSExamData(data.result));
+
+
+      }
+
+    }
+    fetchData();
+  });
+
+
+  const { data: invigilator } = useGetInvgByIDQuery(examData.allotedInvigilator)
+  
+  const { data: room } = useGetRoomByIDQuery(examData.room)
+  
+  const allotedS = examData.allotedStudents;
+  const allotedP = examData.presentStudents;
+  const allotedC = examData.cheatingStudents;
+  const { data: studentA } = useGetStudentByIDQuery(allotedS)
+  const { data: studentP } = useGetStudentByIDQuery(allotedP)
+  const { data: studentC } = useGetStudentByIDQuery(allotedC)
+  
   const handleMinimize = () => {
     setIsMinimized(!isMinimized);
   };
-  const { id } = useParams(); // get the id from the url id of particular exam
-
-  const { data, isLoading } = useGetExamByIDQuery(id); // get the exam data from the backend
-  useEffect(() => {
-    if (isLoading === false) {
-      setExamData(data.result)
-    }
-  
-  })
-
 
 
 
@@ -54,21 +78,34 @@ const ViewExam = () => {
               <h1>Islamabad Campus</h1>
             </div>
             <Divider />
-            {/* Main Section  */}    
-            <div className='flex justify-between'>     
-            {/* left section  */}
-            <div className='flex flex-col p-3'>
-              <h1 className='font-semibold text-3xl'>{examData.examCode}: <span>{examData.examName}</span></h1>
-              <h1 className='mt-10'>{formatDate(examData.examDate)}</h1>
-              <h1 className='mt-1 font-semibold text-xl'>Course Invigilator</h1>
-              <h1 className='mt-1'>{examData.allotedInvigilator}</h1>
-            </div>
-            {/* right section  */}
-            <div className='flex flex-col p-3'>
-              <h1 >Serial No: <span>{examData.serialNo}</span></h1>
-              <h1 className='mt-1 font-semibold text-3xl'>{examData.examType}</h1>
-              <h1 className='mt-1 font-semibold text-xl'>Total Time: <span>{examData.examDuration}</span></h1>
-            </div>
+            {/* Main Section  */}
+            <div className='flex flex-col'>
+              <div className='flex justify-between'>
+                {/* left section  */}
+                <div className='flex flex-col p-3'>
+                  <h1 className='font-semibold text-3xl'>{examData.examCode}: <span>{examData.examName}</span></h1>
+                  <h1 className='mt-10'>{formatDate(examData.examDate)}</h1>
+                  <h1 className='mt-1 font-semibold text-xl'>Course Invigilator</h1>
+                  <h1 className='mt-1'>{invigilator?.result?.name}</h1>
+                  <h1 className='mt-1 font-semibold'>Start Time</h1>
+                  <h1 className='mt-1'>{formatTime(examData.startTime)}</h1>
+                </div>
+                {/* right section  */}
+                <div className='flex flex-col p-3'>
+                  <h1 >Serial No: <span>{examData.serialNo}</span></h1>
+                  <h1 className='mt-1 font-semibold text-3xl'>{examData.examType}</h1>
+                  <h1 className='mt-1 font-semibold text-xl'>Total Time: <span>{examData.examDuration}</span></h1>
+                  <h1 className='mt-1 font-semibold text-xl'>Alloted Room </h1>
+                  <h1 className='mt-1'>{room?.result?.roomID}</h1>
+                  <h1 className='mt-1 font-semibold'>End Time</h1>
+                  <h1 className='mt-1'>{formatTime(examData.endTime)}</h1>
+                </div>
+              </div>
+              <div className='p-3' >
+                  <Tabl rowdata={studentA?.result} name='Alloted Students' />
+                  <Tabl rowdata={studentP?.result}  name = 'Present Students'/>
+                  <Tabl rowdata={studentC?.result}  name = 'Cheating Students'/>
+                </div>
             </div>
 
           </div>

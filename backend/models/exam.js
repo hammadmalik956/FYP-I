@@ -43,6 +43,10 @@ const ExamSchema = new Schema({
         type: Schema.Types.ObjectId, ref: 'student',
         default: []
     }],
+    cheatingStudents: [{
+        type: Schema.Types.ObjectId, ref: 'student',
+        default: []
+    }],
     startTime: { type: Date, },
     endTime: { type: Date, },
     comStatus: {
@@ -65,6 +69,7 @@ const validateExam = (exam) => {
         room: Joi.required(),
         allotedStudents: Joi.array().required(),
         presentStudents: Joi.array().optional(),
+        cheatingStudents: Joi.array().optional(),
         startTime: Joi.required(),
         endTime: Joi.required(),
         comStatus: Joi.optional()
