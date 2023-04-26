@@ -13,7 +13,7 @@ const ExamTable = () => {
         // get data from database 
 
         if (isLoading === false) {
-            const newData = data.result.map(item => {
+            const newData = data?.result?.map(item => {
                 const date = new Date(item.examDate); // create a new Date object from the timestamp
                 const year = date.getFullYear();
                 const month = ("0" + (date.getMonth() + 1)).slice(-2); // add leading zero to month if needed
@@ -46,7 +46,7 @@ const ExamTable = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {tabData.map((item, index) => (
+                    {tabData?.map((item, index) => (
                         < tr key={item._id} className={`${index % 2 === 0 ? "bg-gray-200" : ""}   `} >
                             <td>{index + 1}</td>
                             <td>{item.examName}</td>
@@ -54,8 +54,8 @@ const ExamTable = () => {
                             <td>{item.examType}</td>
                             <td>{item.examDate}</td>
 
-                            {(userType === 'invg') && <td className='py-2'><Link to={`/dashboard/vexam/${item._id}`}>
-                                <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                            {(userType === 'invg') && <td className='py-2'><Link to={`/dashboard/sexam/${item._id}`}>
+                                <button className="bg-gray-500 hover:bg-gray-900 text-white font-bold py-2 px-4 rounded">
                                     Start
                                 </button>
                             </Link></td>}

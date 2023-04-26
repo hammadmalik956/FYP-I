@@ -10,6 +10,8 @@ import SideNavBar from './components/SideNavBar';
 import ViewExam from './components/Dashboard/ViewExam';
 import CreateResource from './components/Dashboard/CreateResource';
 import CreateExam from './components/Dashboard/CreateExam';
+import ViewExamIn from './components/Dashboard/ViewExamIn';
+import StartExam from './components/Dashboard/StartExam';
 
 
 
@@ -40,9 +42,11 @@ function App() {
           />
           <Route exact path="settings" element={ <>helo</>} 
           />
-          {/* <Route exact path="viewexams" element={ <ViewExam/>} 
-          /> */}
+          <Route exact path="viewexams" element={ <ViewExamIn/>} 
+          />
            <Route exact path="vexam/:id"  element={ <ViewExam/>} 
+          />
+          <Route exact path="sexam/:id"  element={ <StartExam/>} 
           />
           </Route>
       </Routes>

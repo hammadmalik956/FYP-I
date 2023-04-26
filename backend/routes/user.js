@@ -120,9 +120,9 @@ router.post("/forgot-password",errorCatcher(userController.forgotPassword));
 router.get("/reset-password",errorCatcher(userController.resetPassword));
 
 // Route 2: Get all  Invigilators using 
-router.post("/get-invigilators",[authorize,isAdmin], errorCatcher(userController.getInvigilators));
+router.post("/get-invigilators",[authorize], errorCatcher(userController.getInvigilators));
 // Route 2: Get specific  invigilator using invg id
-router.post("/getinvgbyid",[authorize,isAdmin], errorCatcher(userController.getInvigilatorByID));
+router.post("/getinvgbyid",[authorize], errorCatcher(userController.getInvigilatorByID));
 
 
 
