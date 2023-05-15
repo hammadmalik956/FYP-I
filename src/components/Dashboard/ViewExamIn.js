@@ -2,6 +2,7 @@ import React ,{useState} from 'react'
 import ExamTable from './ExamTable';
 import TaskIcon from '@mui/icons-material/Task';
 
+
 const ViewExamIn = () => {
     const [isMinimized, setIsMinimized] = useState(false);
     const handleMinimize = () => {
@@ -25,7 +26,9 @@ const ViewExamIn = () => {
                 </div>
                 {!isMinimized && (
                     <ExamTable />
+                    
                 )}
+               
             </div>
     </div>
   )

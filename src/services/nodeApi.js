@@ -37,6 +37,17 @@ export const nodeApi = createApi({
             } ),
             providesTags: [ 'Admin' ],
           } ),
+          addPresentStudent: builder.mutation( {
+            query: ( body ) => ( {
+              url: '/exam/addpresentstudent',
+              method: 'POST',
+              body,
+              headers: {
+                'authorization': `Bearer ${Cookies.get( 'jwt' )}`,
+              }
+            } ),
+            providesTags: [ 'Admin' ],
+          } ),
           createInvigilator: builder.mutation( {
             query: ( body ) => ( {
               url: '/user/createuser',
@@ -148,4 +159,4 @@ export const nodeApi = createApi({
     })
 })
 
-export const {useUserLoginMutation,useAddStudentMutation,useAddRoomMutation, useCreateInvigilatorMutation,useGetAllRoomsQuery,useGetAllStudentsQuery,useGetAllInvigilatorsQuery ,useCreateExamMutation,useGetAllExamsQuery,useGetExamByIDQuery,useGetInvgByIDQuery,useGetRoomByIDQuery,useGetStudentByIDQuery} = nodeApi;
+export const {useUserLoginMutation,useAddStudentMutation,useAddRoomMutation, useCreateInvigilatorMutation,useGetAllRoomsQuery,useGetAllStudentsQuery,useGetAllInvigilatorsQuery ,useCreateExamMutation,useGetAllExamsQuery,useGetExamByIDQuery,useGetInvgByIDQuery,useGetRoomByIDQuery,useGetStudentByIDQuery,useAddPresentStudentMutation} = nodeApi;

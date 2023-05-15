@@ -1,12 +1,15 @@
-import React, { useEffect, useState ,useRef } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 import TaskIcon from '@mui/icons-material/Task';
 import { Divider } from '@mui/material';
-import { useGetExamByIDQuery, useGetInvgByIDQuery ,useGetRoomByIDQuery ,useGetStudentByIDQuery } from '../../services/nodeApi';
-import { formatDate,formatTime } from './Utils/formatDnT';
+import { useGetExamByIDQuery, useGetInvgByIDQuery, useGetRoomByIDQuery, useGetStudentByIDQuery } from '../../services/nodeApi';
+import { formatDate, formatTime } from './Utils/formatDnT';
 import { setSExamData } from '../../redux/singExamD';
 import { useDispatch } from 'react-redux';
 import Tabl from './Utils/Tabl';
+
+import MarkAttendance from './MarkAttendance';
+
 
 
 const StartExam = () => {
@@ -17,6 +20,9 @@ const StartExam = () => {
 
   const { id } = useParams(); // get the id from the url id of particular exam
   const { data, isLoading } = useGetExamByIDQuery(id); // get the exam data from the backend
+  
+
+
 
   useEffect(() => {
     async function fetchData() {
@@ -34,16 +40,16 @@ const StartExam = () => {
 
 
   const { data: invigilator } = useGetInvgByIDQuery(examData.allotedInvigilator)
-  
+
   const { data: room } = useGetRoomByIDQuery(examData.room)
-  
+
   const allotedS = data?.result?.allotedStudents;
   const allotedP = data?.result?.presentStudents;
   const allotedC = data?.result?.cheatingStudents;
   const { data: studentA } = useGetStudentByIDQuery(allotedS)
   const { data: studentP } = useGetStudentByIDQuery(allotedP)
   const { data: studentC } = useGetStudentByIDQuery(allotedC)
-  
+
   const handleMinimize = () => {
     setIsMinimized(!isMinimized);
   };
@@ -120,16 +126,25 @@ const StartExam = () => {
                   <h1 className='mt-1'>{room?.result?.roomID}</h1>
                   <h1 className='mt-1 font-semibold'>End Time</h1>
                   <h1 className='mt-1 '>{formatTime(examData.endTime)}</h1>
-                  <button className="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={startTimer} >Start Exam</button> 
+                  <button className="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={startTimer} >Start Exam</button>
+                 
                 </div>
               </div>
               <div className='p-3' >
-                  <Tabl rowdata={studentA?.result} name='Alloted Students' />
-                  <Tabl rowdata={studentP?.result}  name = 'Present Students'/>
-                  <button className=" bg-gray-500 hover:bg-gray-900 text-white font-bold py-2 px-4 rounded" onClick={startTimer} >Add Cheater</button> 
-                  <Tabl rowdata={studentC?.result}  name = 'Cheating Students'/>
-                </div>
+                
+               <MarkAttendance examid={id} />
+               
+                <Tabl rowdata={studentA?.result} name='Alloted Students' />
+                <Tabl rowdata={studentP?.result} name='Present Students' />
+
+                <button className=" bg-gray-500 hover:bg-gray-900 text-white font-bold py-2 px-4 rounded" onClick={startTimer} >Add Cheater</button>
+                <Tabl rowdata={studentC?.result} name='Cheating Students' />
+              </div>
             </div>
+            
+             
+            
+
 
           </div>
         )}

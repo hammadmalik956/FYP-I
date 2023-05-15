@@ -92,7 +92,10 @@ const addPresentStudenttoExam = async (req, res) => {
       console.error(error);
       sendResponse(res, "failure", 500, "Internal server error");
     }
+
   };
+ 
+
 
 
 
